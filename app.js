@@ -5,6 +5,7 @@ const mongoose =require('mongoose');
 const morgan =require('morgan');
 const bodyParser =require('body-parser');
 const cookieParser =require('cookie-parser');
+const cors = require('cors');
 
 //APP CONFIG
 const app = express();
@@ -25,6 +26,7 @@ const productRoutes = require('./routes/product')
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(cors());
 
 //ROUTES MIDDLEWARE
 app.use("/api",authRoutes);

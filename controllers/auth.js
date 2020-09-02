@@ -7,13 +7,13 @@ const { validationResult } = require('express-validator');
 exports.signup = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.errors.map(error => { return error.msg }) });
+        return res.status(400).json({ error: errors.errors.map(error => { return error.msg })[0] });
     }
     const user = new User(req.body);
     user.save((err, user) => {
         if (err) {
             return res.status(400).json({
-                err: errorHandler(err)
+                error: errorHandler(err)
             })
         }
         else {
