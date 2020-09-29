@@ -4,10 +4,10 @@ const { errorHandler } = require("../helpers/dbErrorHandler");
 exports.create = (req, res) => {
     const category = new Category(req.body);
 
-    category.save((err, categoryData) => {
-        if (err) {
+    category.save((error, categoryData) => {
+        if (error) {
             return res.status(400).json({
-                err: errorHandler(err)
+                error: errorHandler(error)
             })
         }
         else {
@@ -21,8 +21,8 @@ exports.read = (req,res) => {
 }
 
 exports.categoryById = (req, res, next, id) => {
-    Category.findById(id).exec((err,category) => {
-        if(err||!category){
+    Category.findById(id).exec((error,category) => {
+        if(error||!category){
             return res.status(400).json({error:"Category not found!"});
         }
         req.category = category;
@@ -33,10 +33,10 @@ exports.categoryById = (req, res, next, id) => {
 exports.remove = (req,res) => {
     const category = req.category;
 
-    category.remove((err,deletedProduct) => {
-        if (err) {
+    category.remove((error,deletedProduct) => {
+        if (error) {
             return res.status(400).json({
-                err: errorHandler(err)
+                error: errorHandler(error)
             })
         }
         else {
@@ -49,10 +49,10 @@ exports.update = (req, res) => {
     const category = req.category;
     category.name = req.body.name
 
-    category.save((err, categoryData) => {
-        if (err) {
+    category.save((error, categoryData) => {
+        if (error) {
             return res.status(400).json({
-                err: errorHandler(err)
+                error: errorHandler(error)
             })
         }
         else {
@@ -62,14 +62,14 @@ exports.update = (req, res) => {
 }
 
 exports.list = (req, res) => {
-    Category.find().exec((err,categoryList) => {
-        if (err) {
+    Category.find().exec((error,data) => {
+        if (error) {
             return res.status(400).json({
-                err: errorHandler(err)
+                error: errorHandler(error)
             })
         }
         else {
-            res.json({ categoryList });
+            res.json(data);
         }
     });
 }
